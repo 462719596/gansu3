@@ -1,0 +1,16 @@
+__MACOSX/
+.vercel/
+.trae/
+*.env
+.env*
+
+# Frontend
+project 3/node_modules/
+project 3/dist/
+
+# Backend
+server/node_modules/
+server/uploads/
+server/dev.db
+server/prisma/dev.db
+server/prisma/dev.db-journal

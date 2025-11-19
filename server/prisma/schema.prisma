@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Destination {
+  id            String  @id @default(uuid())
+  name          String
+  region        String?
+  type          String?
+  description   String?
+  coverImageUrl String?
+  location      String?
+  tags          String? // comma-separated
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model GalleryImage {
+  id        String   @id @default(uuid())
+  title     String?
+  url       String
+  createdAt DateTime @default(now())
+}
+
+model Itinerary {
+  id            String   @id @default(uuid())
+  title         String
+  days          Int
+  price         Int
+  description   String?
+  coverImageUrl String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  name         String?
+  role         String   @default("user")
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Booking {
+  id          String   @id @default(uuid())
+  userId      String
+  itineraryId String
+  startDate   DateTime
+  peopleCount Int
+  price       Int
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+}

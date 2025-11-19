@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=Noto+Serif+SC:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    @apply font-body text-ink-800;
+    background: linear-gradient(135deg, #f4f1ea 0%, #ede8dd 25%, #f7f3ec 50%, #f0ebe0 75%, #f4f1ea 100%);
+    background-size: 400% 400%;
+    animation: desertShimmer 20s ease-in-out infinite;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @keyframes desertShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-title;
+  }
+
+  .scroll-mask {
+    mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+    -webkit-mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+  }
+
+  .writing-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  /* 优化动画性能 */
+  * {
+    will-change: auto;
+  }
+
+  /* 为动画元素优化 */
+  .motion-element {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* 平滑的过渡效果 */
+  .smooth-transition {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* 卡片悬停效果优化 */
+  .card-ancient {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* 按钮动画优化 */
+  .btn-primary, .btn-secondary {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateZ(0);
+  }
+
+  /* 图片加载动画 */
+  img {
+    transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* 滚动条样式优化 */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  /* 减少动画偏好设置 */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* 高对比度模式优化 */
+  @media (prefers-contrast: high) {
+    .card-ancient {
+      border: 2px solid currentColor;
+    }
+  }
+
+  /* 触摸设备优化 */
+  @media (hover: none) and (pointer: coarse) {
+    .card-ancient:hover {
+      transform: none;
+    }
+
+    .motion-element {
+      will-change: auto;
+    }
+  }
+
+  /* GPU加速优化 */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  .ink-brush::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: radial-gradient(circle, rgba(44, 24, 16, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: -1;
+    transition: all 0.3s ease;
+    opacity: 0;
+  }
+
+  .ink-brush:hover::before {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+  /* 卷轴样式 */
+  .scroll-container {
+    background: linear-gradient(to right, 
+      #8b7355 0%, 
+      #c9b791 10%, 
+      #faf7f2 20%, 
+      #faf7f2 80%, 
+      #c9b791 90%, 
+      #8b7355 100%
+    );
+    border-radius: 20px;
+    position: relative;
+  }
+
+  .scroll-container::before,
+  .scroll-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    background: linear-gradient(to bottom, #8b7355, #6d5a42, #8b7355);
+    border-radius: 15px;
+  }
+
+  .scroll-container::before {
+    left: -15px;
+    box-shadow: inset 2px 0 4px rgba(0,0,0,0.3);
+  }
+
+  .scroll-container::after {
+    right: -15px;
+    box-shadow: inset -2px 0 4px rgba(0,0,0,0.3);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gold-500 hover:bg-gold-600 text-ink-800 font-medium px-6 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent border-2 border-gold-500 text-gold-600 hover:bg-gold-500 hover:text-ink-800 font-medium px-6 py-3 rounded-full transition-all duration-300;
+  }
+
+  .card-ancient {
+    @apply bg-gradient-to-b from-slate-50 to-slate-100 border border-ink-200 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden;
+    background-image: 
+      radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(139, 157, 195, 0.1) 0%, transparent 50%);
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-gold-600 via-gold-500 to-gold-600 bg-clip-text text-transparent;
+  }
+}
