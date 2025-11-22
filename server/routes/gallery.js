@@ -9,8 +9,9 @@ import { prisma } from '../db/prisma.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+const uploadDir = process.env.UPLOAD_DIR || path.join(__dirname, '..', 'uploads')
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, '..', 'uploads')),
+  destination: (req, file, cb) => cb(null, uploadDir),
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname)
     cb(null, `${Date.now()}-${uuid()}${ext}`)

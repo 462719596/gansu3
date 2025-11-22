@@ -16,9 +16,11 @@ const __dirname = path.dirname(__filename)
 const app = express()
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }))
+const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:5173'
+app.use(cors({ origin: corsOrigin, credentials: true }))
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+const uploadDir = process.env.UPLOAD_DIR || path.join(__dirname, 'uploads')
+app.use('/uploads', express.static(uploadDir))
 app.use('/api/auth', authRouter)
 app.use('/api/destinations', destinationsRouter)
 app.use('/api/itineraries', itinerariesRouter)
