@@ -3,6 +3,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import fs from 'fs'
 import authRouter from './routes/auth.js'
 import destinationsRouter from './routes/destinations.js'
 import itinerariesRouter from './routes/itineraries.js'
@@ -20,6 +21,7 @@ const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:5173'
 app.use(cors({ origin: corsOrigin, credentials: true }))
 
 const uploadDir = process.env.UPLOAD_DIR || path.join(__dirname, 'uploads')
+try { fs.mkdirSync(uploadDir, { recursive: true }) } catch {}
 app.use('/uploads', express.static(uploadDir))
 app.use('/api/auth', authRouter)
 app.use('/api/destinations', destinationsRouter)
