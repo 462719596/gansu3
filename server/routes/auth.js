@@ -20,12 +20,12 @@ router.post('/login', async (req, res) => {
   const ok = await bcrypt.compare(password, user.passwordHash)
   if (!ok) return res.status(401).json({ error: 'invalid_credentials' })
   const token = signToken({ id: user.id, email: user.email, role: user.role })
-  res.cookie('token', token, { httpOnly: true, sameSite: 'lax' })
+  res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true })
   res.json({ id: user.id, email: user.email, name: user.name, role: user.role })
 })
 
 router.post('/logout', (req, res) => {
-  res.clearCookie('token')
+  res.clearCookie('token', { sameSite: 'none', secure: true })
   res.json({ ok: true })
 })
 
